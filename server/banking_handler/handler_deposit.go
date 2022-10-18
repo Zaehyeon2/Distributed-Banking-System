@@ -16,6 +16,7 @@ type requestDeposit struct {
 	Amount  uint64 `json:"amount"`
 }
 
+// Deposit handling deposit a certain amount of tokens into one's account
 func (h handler) Deposit(eCtx echo.Context) error {
 	var form = requestDeposit{}
 	if err := eCtx.Bind(&form); err != nil {

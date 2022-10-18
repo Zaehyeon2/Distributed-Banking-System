@@ -17,6 +17,7 @@ type bankingFSM struct {
 	ledgers map[string]uint64
 }
 
+// deposit deposit a certain amount of tokens into one's accont
 func (f *bankingFSM) deposit(account string, amount uint64) error {
 
 	// Lock FSM during depositing
@@ -37,6 +38,7 @@ func (f *bankingFSM) deposit(account string, amount uint64) error {
 	return nil
 }
 
+// transfer transfer a certain amount of tokens from one's account into another
 func (f *bankingFSM) transfer(sender string, receiver string, amount uint64) error {
 	// Lock FSM during transferring
 	f.mtx.Lock()
@@ -70,6 +72,7 @@ func (f *bankingFSM) transfer(sender string, receiver string, amount uint64) err
 	}
 }
 
+// get query a balance of account
 func (f *bankingFSM) get(account string) (uint64, error) {
 
 	// Check if the account exists in the ledger.
@@ -81,6 +84,7 @@ func (f *bankingFSM) get(account string) (uint64, error) {
 	}
 }
 
+// Apply apply a command
 func (f *bankingFSM) Apply(log *raft.Log) interface{} {
 	switch log.Type {
 	case raft.LogCommand:
@@ -89,6 +93,7 @@ func (f *bankingFSM) Apply(log *raft.Log) interface{} {
 			_, _ = fmt.Fprintf(os.Stderr, "error marshalling store payload %s\n", err.Error())
 			return nil
 		}
+		// Operation including deposit, transfer, and get
 		op := strings.ToUpper(strings.TrimSpace(payload.Operation))
 		switch op {
 		case "DEPOSIT":
@@ -114,10 +119,12 @@ func (f *bankingFSM) Apply(log *raft.Log) interface{} {
 	return nil
 }
 
+// Snapshot manually force Raft to take a snapshot
 func (f *bankingFSM) Snapshot() (raft.FSMSnapshot, error) {
 	return newSnapshotNoop()
 }
 
+// Restore manually force Raft to consume an external snapshot
 func (f *bankingFSM) Restore(rClose io.ReadCloser) error {
 	defer func() {
 		if err := rClose.Close(); err != nil {
@@ -156,6 +163,7 @@ func (f *bankingFSM) Restore(rClose io.ReadCloser) error {
 	return nil
 }
 
+// NewBank create a new bankFSM
 func NewBank() raft.FSM {
 	return &bankingFSM{ledgers: make(map[string]uint64)}
 }

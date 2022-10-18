@@ -17,6 +17,7 @@ type requestTransfer struct {
 	Amount   uint64 `json:"amount"`
 }
 
+// Deposit handling transfer a certain amount of tokens from one's account into one's account
 func (h handler) Transfer(eCtx echo.Context) error {
 	var form = requestTransfer{}
 	if err := eCtx.Bind(&form); err != nil {

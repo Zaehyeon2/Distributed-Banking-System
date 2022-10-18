@@ -6,7 +6,7 @@ import (
 	"github.com/labstack/echo"
 )
 
-// StatsRaftHandler get raft status
+// StatsRaftHandler get all nodes' status
 func (h handler) StatsNodesHandler(eCtx echo.Context) error {
 	data := h.raft.Stats()
 	return eCtx.JSON(http.StatusOK, map[string]interface{}{

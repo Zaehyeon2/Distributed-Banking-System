@@ -11,6 +11,7 @@ import (
 	"github.com/labstack/echo"
 )
 
+// Deposit handling query a balance of one's account
 func (h handler) Get(eCtx echo.Context) error {
 	Account := eCtx.Param("account")
 
