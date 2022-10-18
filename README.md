@@ -15,12 +15,12 @@ Distributed-Banking-System
 └ node_1_data - data of node_2, including snapshots and dataRepo  
 └ node_1_data - data of node_3, including snapshots and dataRepo  
 └ node  
-	└─ main.go - The main go file for running the raft node  
+  └─ main.go - The main go file for running the raft node  
 └ fsm - For making use of the replicated log [fsm](https://github.com/hashicorp/raft/blob/main/fsm.go)  
 └ server  
-	└─ raft_handler - The handler for raft cluster management  
-	└─ banking_handler - The handler for basic features  
-	└─ server.go - The HTTP server using Echo framework  
+  └─ raft_handler - The handler for raft cluster management  
+  └─ banking_handler - The handler for basic features  
+  └─ server.go - The HTTP server using Echo framework  
 
 ## How to run?
 
