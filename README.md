@@ -4,6 +4,24 @@ Simple distributed banking system using the [Raft](https://raft.github.io/) cons
 
 This implement referenced [Creating Distributed KV Database by Implementing Raft Consensus Using Golang](https://yusufs.medium.com/creating-distributed-kv-database-by-implementing-raft-consensus-using-golang-d0884eef2e28) and used  [hashicorp/raft](https://github.com/hashicorp/raft) Go library for Raft.
 
+## Source tree
+
+Distributed-Banking-System
+└ go.mod
+└ go.sum
+└ README.md
+└ LICENSE
+└ node_1_data - data of node_1, including snapshots and dataRepo
+└ node_1_data - data of node_2, including snapshots and dataRepo
+└ node_1_data - data of node_3, including snapshots and dataRepo
+└ node
+	└─ main.go - The main go file for running the raft node
+└ fsm - For making use of the replicated log [fsm](https://github.com/hashicorp/raft/blob/main/fsm.go)
+└ server
+	└─ raft_handler - The handler for raft cluster management
+	└─ banking_handler - The handler for basic features
+	└─ server.go - The HTTP server using Echo framework
+
 ## How to run?
 
 ### Run servers
