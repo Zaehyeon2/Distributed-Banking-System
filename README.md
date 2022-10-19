@@ -32,6 +32,8 @@ Distributed-Banking-System
 Set three or more server with different program in different terminal tab:
 
 ```shell
+mkdir node_1_data node_2_data node_3_data
+
 SERVER_PORT=2221 RAFT_NODE_ID=node1 RAFT_PORT=1111 RAFT_VOL_DIR=node_1_data go run dbs/node
 SERVER_PORT=2222 RAFT_NODE_ID=node2 RAFT_PORT=1112 RAFT_VOL_DIR=node_2_data go run dbs/node
 SERVER_PORT=2223 RAFT_NODE_ID=node3 RAFT_PORT=1113 RAFT_VOL_DIR=node_3_data go run dbs/node
