@@ -14,6 +14,9 @@ Distributed-Banking-System
 └ node_1_data - data of node_1, including snapshots and dataRepo  
 └ node_1_data - data of node_2, including snapshots and dataRepo  
 └ node_1_data - data of node_3, including snapshots and dataRepo  
+└ test.sh - testing scripts of Distributed-Banking-System  
+└ reset.sh - reset Raft data script  
+└ node_1_data - data of node_3, including snapshots and dataRepo  
 └ node  
   └─ main.go - The main go file for running the raft node  
 └ fsm - For making use of the replicated log [fsm](https://github.com/hashicorp/raft/blob/main/fsm.go)  
@@ -60,6 +63,19 @@ curl --location --request POST 'localhost:2221/raft/join' \
 
 >>>
 {"data":{"applied_index":"4","commit_index":"4","fsm_pending":"0","last_contact":"0","last_log_index":"4","last_log_term":"2","last_snapshot_index":"0","last_snapshot_term":"0","latest_configuration":"[{Suffrage:Voter ID:node1 Address:127.0.0.1:1111} {Suffrage:Voter ID:node_2 Address:127.0.0.1:1112} {Suffrage:Voter ID:node_3 Address:127.0.0.1:1113}]","latest_configuration_index":"0","num_peers":"2","protocol_version":"3","protocol_version_max":"3","protocol_version_min":"0","snapshot_version_max":"1","snapshot_version_min":"0","state":"Leader","term":"2"},"message":"node node_3 at 127.0.0.1:1113 joined successfully"}
+```
+
+### Testing
+
+Run test.sh for testing distributed banking system.
+```shell
+./test.sh
+```
+
+You can reset data of banking system.
+```shell
+./reset.sh
+# After running the script, you should restart raft servers to reset data.
 ```
 
 ## Implement features
@@ -131,6 +147,8 @@ curl --location --request GET 'localhost:2221/raft/nodesstats'
 
 ### Basic Features
 
+All states are persisted, even after the application is restarted.
+
 #### POST /deposit
 
 You can deposit a certain amount of tokens into one's account.
@@ -201,4 +219,11 @@ curl --location --request GET 'localhost:2221/get/account2'
 
 ### Replication
 
-All stats are replicated between a Raft cluster that consists of nodes, even the application is restarted.
+All stats are replicated between a Raft cluster that consists of nodes.
+
+## Improvement Plan
+
+In this implementation, any clients can deposit and transfer tokens and get a balance, even not their accounts.
+The authentication scheme should be considered for the real-world banking systems.
+Moreover, an error message passing in the transfer feature was not implemented.
+This may be because I am not familiar with Go. I need to improve the Go skills.
