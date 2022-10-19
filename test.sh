@@ -104,7 +104,7 @@ echo '########## (Get) A balance of account2'
 curl --location --request GET 'localhost:2221/get/account2'
 
 echo ''
-echo '###### (Transfer) If sender`s account does not have enough tokens, return error.'
+echo '###### (Transfer) If sender`s account does not have enough tokens (100,000,000,000 tokens :0), return error.'
 curl --location --request POST 'localhost:2221/transfer' --header 'Content-Type: application/json' --data-raw '{
         "sender": "account1", 
         "receiver": "account2",
