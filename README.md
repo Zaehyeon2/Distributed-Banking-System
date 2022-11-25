@@ -44,7 +44,7 @@ SERVER_PORT=2223 RAFT_NODE_ID=node3 RAFT_PORT=1113 RAFT_VOL_DIR=node_3_data go r
 After running each server, register nodes as followers to node_1 as a leader with POST to`/raft/join`.
 
 ```shell
-curl --location --request POST 'localhost:2221/raft/join' \
+curl --location --request POST 'localhost:2221/raft' \
 --header 'Content-Type: application/json' \
 --data-raw '{
 	"node_id": "node_2", 
@@ -56,7 +56,7 @@ curl --location --request POST 'localhost:2221/raft/join' \
 ```
 
 ```shell
-curl --location --request POST 'localhost:2221/raft/join' \
+curl --location --request POST 'localhost:2221/raft' \
 --header 'Content-Type: application/json' \
 --data-raw '{
 	"node_id": "node_3", 
@@ -84,7 +84,7 @@ You can reset data of banking system.
 
 ### Raft cluster management
 
-#### POST /raft/join
+#### POST /raft
 
 You can add a new node to the cluster.
 
@@ -96,7 +96,7 @@ You can add a new node to the cluster.
 Example:
 
 ```shell
-curl --location --request POST 'localhost:2221/raft/join' \
+curl --location --request POST 'localhost:2221/raft' \
 --header 'Content-Type: application/json' \
 --data-raw '{
 	"node_id": "node_2", 
@@ -107,7 +107,7 @@ curl --location --request POST 'localhost:2221/raft/join' \
 {"data":{"applied_index":"3","commit_index":"3","fsm_pending":"0","last_contact":"0","last_log_index":"3","last_log_term":"2","last_snapshot_index":"0","last_snapshot_term":"0","latest_configuration":"[{Suffrage:Voter ID:node1 Address:127.0.0.1:1111} {Suffrage:Voter ID:node_2 Address:127.0.0.1:1112}]","latest_configuration_index":"0","num_peers":"1","protocol_version":"3","protocol_version_max":"3","protocol_version_min":"0","snapshot_version_max":"1","snapshot_version_min":"0","state":"Leader","term":"2"},"message":"node node_2 at 127.0.0.1:1112 joined successfully"}
 ```
 
-#### DELETE /raft/remove/:node_id
+#### DELETE /raft/:node_id
 
 You can delete one of the existing nodes in the cluster.
 
@@ -118,7 +118,7 @@ You can delete one of the existing nodes in the cluster.
 Example:
 
 ```sh
-curl --location --request DELETE 'localhost:2221/raft/remove/node_2'
+curl --location --request DELETE 'localhost:2221/raft/node_2'
 
 >>> {"message":"node node_2 removed successfully"}
 ```
@@ -151,7 +151,7 @@ curl --location --request GET 'localhost:2221/raft/nodesstats'
 
 All states are persisted, even after the application is restarted.
 
-#### POST /deposit
+#### POST /bank
 
 You can deposit a certain amount of tokens into one's account.
 
@@ -165,7 +165,7 @@ If the account does not exists, create a new one.
 Example:
 
 ```shell
-url --location --request POST 'localhost:2221/deposit' \
+url --location --request POST 'localhost:2221/bank' \
 --header 'Content-Type: application/json' \
 --data-raw '{
         "account": "account1", 
@@ -175,7 +175,7 @@ url --location --request POST 'localhost:2221/deposit' \
 >>> {"data":"Deposited 10 tokens to account1.","message":"success persisting data"}
 ```
 
-#### POST /transfer
+#### PUT /bank
 
 You can transfer a certain amount of tokens from one's account to another.
 
@@ -192,7 +192,7 @@ If the sender's account does not exist, the system returns an error.
 Example:
 
 ```shell
-curl --location --request POST 'localhost:2221/transfer' --header 'Content-Type: application/json' --data-raw '{
+curl --location --request PUT 'localhost:2221/bank' --header 'Content-Type: application/json' --data-raw '{
         "sender": "account1", 
         "receiver": "account2",
         "amount": 10
@@ -201,7 +201,7 @@ curl --location --request POST 'localhost:2221/transfer' --header 'Content-Type:
 >>> {"data":"Transfered 10 tokens from account1 to account2.","message":"success persisting data"}
 ```
 
-#### GET /get/:account
+#### GET /bank/:account
 
 You can query a balance of an account.
 
@@ -214,7 +214,7 @@ If the account does not exist, the system returns an error.
 Example:
 
 ```shell
-curl --location --request GET 'localhost:2221/get/account2'
+curl --location --request GET 'localhost:2221/bank/account2'
 
 >>> {"data":"The account 'account2' has 50 tokens.","message":"success persisting data"}
 ```
