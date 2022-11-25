@@ -37,16 +37,16 @@ func New(listenAddr string, r *raft.Raft) *srv {
 
 	// Raft server
 	raftHandler := raft_handler.New(r)
-	e.POST("/raft/join", raftHandler.JoinRaftHandler)
-	e.DELETE("/raft/remove/:node_id", raftHandler.RemoveRaftHandler)
+	e.POST("/raft", raftHandler.JoinRaftHandler)
+	e.DELETE("/raft/:node_id", raftHandler.RemoveRaftHandler)
 	e.GET("/raft/leaderstats", raftHandler.StatsLeaderHandler)
 	e.GET("/raft/nodesstats", raftHandler.StatsNodesHandler)
 
 	// Banking handler
 	bankingHandler := banking_handler.New(r)
-	e.POST("/deposit", bankingHandler.Deposit)
-	e.POST("/transfer", bankingHandler.Transfer)
-	e.GET("/get/:account", bankingHandler.Get)
+	e.POST("/bank", bankingHandler.Deposit)
+	e.PUT("/bank", bankingHandler.Transfer)
+	e.GET("/bank/:account", bankingHandler.Get)
 
 	return &srv{
 		listenAddress: listenAddr,
