@@ -228,3 +228,4 @@ All stats are replicated between a Raft cluster that consists of nodes.
 1. In this implementation, any clients can deposit and transfer tokens and get a balance, even not their accounts. The authentication scheme should be considered for the real-world banking systems.
 2. An error message passing in the transfer feature was not implemented. This may be because I am not familiar with Go. I need to improve the Go skills.
 3. Response messages are not formatted.
+4. An only leader can get the account's balance. All nodes should get the account's balance.
