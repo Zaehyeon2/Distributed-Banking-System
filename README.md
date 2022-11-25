@@ -41,7 +41,7 @@ SERVER_PORT=2223 RAFT_NODE_ID=node3 RAFT_PORT=1113 RAFT_VOL_DIR=node_3_data go r
 
 ### Creating clusters
 
-After running each server, register nodes as followers to node_1 as a leader with POST to`/raft/join`.
+After running each server, register nodes as followers to node_1 as a leader with POST to`/raft`.
 
 ```shell
 curl --location --request POST 'localhost:2221/raft' \
