@@ -60,7 +60,7 @@ func (h handler) Get(eCtx echo.Context) error {
 	} else {
 		return eCtx.JSON(http.StatusOK, map[string]interface{}{
 			"message": "success persisting data",
-			"data":    fmt.Sprintf("The account '%s' has %d tokens.", Account, resp.Data),
+			"data":    resp.Data,
 		})
 	}
 }

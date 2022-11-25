@@ -74,7 +74,7 @@ func (h handler) Transfer(eCtx echo.Context) error {
 	if resp.Error == nil {
 		return eCtx.JSON(http.StatusOK, map[string]interface{}{
 			"message": "success persisting data",
-			"data":    fmt.Sprintf("Transfered %d tokens from %s to %s.", form.Amount, form.Sender, form.Receiver),
+			"data":    true,
 		})
 	} else {
 		return eCtx.JSON(http.StatusUnprocessableEntity, map[string]interface{}{

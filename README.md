@@ -172,7 +172,7 @@ url --location --request POST 'localhost:2221/bank' \
         "amount": 10
 }'
 
->>> {"data":"Deposited 10 tokens to account1.","message":"success persisting data"}
+>>> {"data":true,"message":"success persisting data"}
 ```
 
 #### PUT /bank
@@ -198,7 +198,7 @@ curl --location --request PUT 'localhost:2221/bank' --header 'Content-Type: appl
         "amount": 10
 }'
 
->>> {"data":"Transfered 10 tokens from account1 to account2.","message":"success persisting data"}
+>>> {"data":true,"message":"success persisting data"}
 ```
 
 #### GET /bank/:account
@@ -216,7 +216,7 @@ Example:
 ```shell
 curl --location --request GET 'localhost:2221/bank/account2'
 
->>> {"data":"The account 'account2' has 50 tokens.","message":"success persisting data"}
+>>> {"data":50,"message":"success persisting data"}
 ```
 
 ### Replication

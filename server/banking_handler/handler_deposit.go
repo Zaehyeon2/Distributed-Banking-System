@@ -66,6 +66,6 @@ func (h handler) Deposit(eCtx echo.Context) error {
 
 	return eCtx.JSON(http.StatusOK, map[string]interface{}{
 		"message": "success persisting data",
-		"data":    fmt.Sprintf("Deposited %d tokens to %s.", form.Amount, form.Account),
+		"data":    true,
 	})
 }
