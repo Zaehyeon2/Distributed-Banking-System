@@ -109,7 +109,7 @@ curl --location --request PUT 'localhost:2221/bank' --header 'Content-Type: appl
         "sender": "account1", 
         "receiver": "account2",
         "amount": 100000000000
-}
+}'
 
 echo ''
 echo '###### (Transfer) If sender`s account does not exist (account123), return error.'
